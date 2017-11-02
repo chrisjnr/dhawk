@@ -17,6 +17,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
+    public $layout='admin_layout';
     public function adminLayout(){
         if (!Yii::$app->user->hasProperty('admin') ){
             $this->layout='admin_layout';
@@ -75,11 +76,21 @@ class SiteController extends Controller
         $projects_finished=Projects::find(['*'])->asArray()->andWhere(['companies_company_id' =>$user_id])->andWhere(['project_status'=>'finished'])->count();
         $joined_date=Companies::find(['*'])->where(['company_id'=>$user_id])->one();
         $joined_date=$joined_date['joined_date'];
+        $companies=Companies::find(['*'])->asArray()->count();
+        if(Yii::$app->user->can('admin')) {
+            $project_count = Projects::find()->count();
+            $projects_finished = Projects::find()->where(['project_status' => 'finished'])->count();
+            $projects_unfinished = Projects::find()->where(['project_status' => 'unfinished'])->count();
+        }
+
+
+        //print_r($companies);
+        //die('haha');
         //$logo=Companies::find(['logo'])->asArray()->where(['company_id'=>4])->all();
         //$logo=$logo[0]['logo'];
         //print_r($logo[0]['logo']);
         //die('ylup');
-        return $this->render('index',['projects_finished'=>$projects_finished,'projects_unfinished'=>$projects_unfinished,'joined_date'=>$joined_date ]);
+        return $this->render('index',['projects_finished'=>$projects_finished,'projects_unfinished'=>$projects_unfinished,'joined_date'=>$joined_date,'companies'=>$companies ]);
 
     }
 
@@ -114,5 +125,22 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function getadmin()
+    {
+        if(Yii::$app->user->can('admin')){
+            $project_count=Projects::find()->all()->count();
+            $project_finished=Projects::find(['*'])->where(['project_status'=>'finished'])->count();
+            print_r($project_count);
+            die('ylup');
+
+
+        }
+
+
+
+        return $this->project_count;
+
     }
 }
