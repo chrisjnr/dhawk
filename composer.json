@@ -29,7 +29,12 @@
         "2amigos/yii2-google-maps-library": "*",
         "kartik-v/yii2-widget-activeform": "@dev",
         "dektrium/yii2-user": "^0.9.12",
-        "thyseus/yii2-message": "^0.3.0"
+        "thyseus/yii2-message": "^0.3.0",
+        "wolfguard/yii2-gallery": "*",
+        "onmotion/yii2-gallery": "*"
+
+
+
 
 
 
@@ -42,6 +47,7 @@
         "codeception/base": "^2.2.3",
         "codeception/verify": "~0.3.1"
     },
+
     "config": {
         "process-timeout": 1800,
         "fxp-asset":{
