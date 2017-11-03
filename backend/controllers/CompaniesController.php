@@ -37,7 +37,7 @@ class CompaniesController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->hasProperty('admin')) {
+        if (Yii::$app->user->can('admin')) {
             $searchModel = new CompaniesSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

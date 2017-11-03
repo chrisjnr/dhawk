@@ -31,7 +31,7 @@
         "dektrium/yii2-user": "^0.9.12",
         "thyseus/yii2-message": "^0.3.0",
         "wolfguard/yii2-gallery": "*",
-        "onmotion/yii2-gallery": "*"
+        "2amigos/yii2-file-upload-widget": "~1.0"
 
 
 

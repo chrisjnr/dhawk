@@ -20,6 +20,7 @@ class DashboardAsset extends AssetBundle
         'css/AdminLTE.min.css',
         'plugins/iCheck/flat/blue.css',
         'dist/css/skins/_all-skins.min.css',
+        'dist/css/skins/skin-black.min.css',
         'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
     ];
     public $js = [

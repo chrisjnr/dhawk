@@ -23,6 +23,8 @@ class ProjectsController extends Controller
      * @inheritdoc
      */
 
+    public $layout='admin_layout';
+
 
     public function behaviors()
     {
@@ -41,7 +43,7 @@ class ProjectsController extends Controller
      * @return mixed
      */
 
-        
+
 
     public function actionIndex()
     {
@@ -53,6 +55,10 @@ class ProjectsController extends Controller
 
             $searchModel = new ProjectsSearch();
             $dataProvider = new ActiveDataProvider(['query' => Projects::find(['*'])->where(['companies_company_id' => $user_id]),]);
+            if (Yii::$app->user->can('admin')){
+                $dataProvider = new ActiveDataProvider(['query' => Projects::find()]);
+            }
+
 
             return $this->render('index', [
 
@@ -71,7 +77,7 @@ class ProjectsController extends Controller
     public function actionView($id)
     {
         // we grab the id and pass it through to the view
-        $user_id=Yii::$app->user->identity->id;
+
         $dataProvider = new ActiveDataProvider(['query'=>ProjectUpdates::find(['*'])->where(['project_id'=>$id]),]);
         
 
@@ -160,9 +166,15 @@ class ProjectsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (Yii::$app->user->can('admin')){
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else {
+            throw new ForbiddenHttpException("You lack the required Privliege to Perform this action", 1);
+        
+        }
+
     }
 
     /**
@@ -181,12 +193,7 @@ class ProjectsController extends Controller
         }
     }
 
-    public function findProject($user_id)
-    {
-        $user_id=Yii::$app->user->identity->id;
-        $rows=Projects::select(['*'])->from('projects')->where(['companies_company_id'=>2])->all();
-        
-    }
+
 
 
     public function actionUpload()
